@@ -6,12 +6,15 @@ import {
   FlatList,
   TouchableOpacity,
   Dimensions,
+  Platform,
 } from "react-native";
-import { useSelector,useDispatch } from "react-redux";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { useSelector, useDispatch } from "react-redux";
 
 import { addToCart } from "../../../store/actions/cart.actions";
 
 import ProductItem from "../../../components/shop/product-item/product-item";
+import CustomHeaderButton from "../../../components/UI/HeaderButton";
 import Colors from "../../../constants/Colors";
 
 // console.log(Dimensions.get('window').width,'Dimensions')
@@ -30,8 +33,6 @@ const ProductOverviewScreen = ({ navigation }) => {
   //   );
   // };
 
-
-
   return (
     <View style={styles.screen}>
       {/* <Text style={styles.title}> ProductOverview </Text> */}
@@ -46,11 +47,10 @@ const ProductOverviewScreen = ({ navigation }) => {
               routeName: "ProductDetail",
               params: {
                 productId: item.id,
-                productTitle:item.title,
+                productTitle: item.title,
               },
             });
           };
-
 
           const onAddToCart = () => {
             dispatch(addToCart(item));
@@ -70,8 +70,26 @@ const ProductOverviewScreen = ({ navigation }) => {
 };
 
 ProductOverviewScreen.navigationOptions = ({ navigation }) => {
+  // const 
+  const handleClick = () => {
+
+    console.log('%c go to cart','color:#fff;padding:10px;border-radius:8px;background-color:blue;')
+    // navigation
+    navigation.navigate({
+      routeName: "Cart",
+      // params: {
+      // },
+    });
+  }
   return {
     headerTitle: "All Products",
+    headerRight: () => {
+      return (
+        <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+          <Item title="cart" iconName={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'}  onPress={handleClick}/>
+        </HeaderButtons>
+      );
+    },
   };
 };
 

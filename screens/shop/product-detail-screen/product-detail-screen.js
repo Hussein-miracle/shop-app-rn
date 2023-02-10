@@ -49,7 +49,7 @@ const ProductDetailScreen = ({ navigation }) => {
     <ScrollView>
       <Image source={{ uri: product.imageUrl }} style={styles.image} />
       <View style={styles.buttonWrapper}>
-        <Button title="Add To Cart" onPress={() => {}} color={Colors.primary} />
+        <Button title="Add To Cart" onPress={handleAddToCart} color={Colors.primary} />
       </View>
       <Text style={styles.price}>${product.price.toFixed(2)}</Text>
       <Text style={styles.description}>{product.description}</Text>

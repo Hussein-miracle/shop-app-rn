@@ -50,13 +50,13 @@ const ProductItem = ({ item, onViewDetail, onAddToCart }) => {
 
 const styles = StyleSheet.create({
   productItem: {
-    backgroundColor: "#fff",
     padding: 4,
     margin: 20,
-    borderRadius: 6,
     height: 300,
     // overflow: "hidden",
-
+    
+    backgroundColor: "#fff",
+    borderRadius: 6,
     shadowColor: "#000",
     shadowOpacity: 0.26,
     shadowOffset: {
