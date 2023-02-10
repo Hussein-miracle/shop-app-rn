@@ -7,7 +7,9 @@ import {
   TouchableOpacity,
   Dimensions,
 } from "react-native";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
+
+import { addToCart } from "../../../store/actions/cart.actions";
 
 import ProductItem from "../../../components/shop/product-item/product-item";
 import Colors from "../../../constants/Colors";
@@ -15,6 +17,7 @@ import Colors from "../../../constants/Colors";
 // console.log(Dimensions.get('window').width,'Dimensions')
 
 const ProductOverviewScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
   const userProducts = useSelector((state) => state.products.userProducts);
 
   // const ProductItem = ({ item }) => {
@@ -27,7 +30,7 @@ const ProductOverviewScreen = ({ navigation }) => {
   //   );
   // };
 
-  const onAddToCart = () => {};
+
 
   return (
     <View style={styles.screen}>
@@ -43,9 +46,16 @@ const ProductOverviewScreen = ({ navigation }) => {
               routeName: "ProductDetail",
               params: {
                 productId: item.id,
+                productTitle:item.title,
               },
             });
           };
+
+
+          const onAddToCart = () => {
+            dispatch(addToCart(item));
+          };
+
           return (
             <ProductItem
               item={item}

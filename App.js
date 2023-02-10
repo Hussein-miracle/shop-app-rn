@@ -1,21 +1,48 @@
+import { useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { createStore, combineReducers } from "redux";
 import { Provider } from "react-redux";
+import * as SplashScreen from "expo-splash-screen";
 import { enableScreens } from "react-native-screens";
-import productsReducer from "./store/reducers/products.reducer";
 
+import { useFonts } from "expo-font";
+
+import productsReducer from "./store/reducers/products.reducer";
+import cartReducer from './store/reducers/cart.reducer';
 import ShopNavigator from "./navigation/shop-navigator";
 
 enableScreens(true);
 
 const rootReducer = combineReducers({
-  products:productsReducer
+  products: productsReducer,
+  cart:
 });
 
 const store = createStore(rootReducer);
 
+SplashScreen.preventAutoHideAsync();
+
 export default function App() {
+  const [fontsLoaded, error] = useFonts({
+    "open-sans": require("./assets/fonts/OpenSans-Regular.ttf"),
+    "open-sans-bold": require("./assets/fonts/OpenSans-Bold.ttf"),
+  });
+
+  useEffect(() => {
+    const loadFonts = async () => {
+      if (fontsLoaded) {
+        await SplashScreen.hideAsync();
+      }
+    };
+
+    loadFonts();
+  }, [fontsLoaded]);
+
+  if(!fontsLoaded){
+    return null;
+  }
+
   return (
     <SafeAreaProvider>
       <Provider store={store}>
